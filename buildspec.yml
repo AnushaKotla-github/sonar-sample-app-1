@@ -22,7 +22,6 @@ phases:
       - |
         sonar-scanner \
           -Dsonar.projectKey="$REPO_NAME" \
-          -Dsonar.branch.name="$BRANCH_NAME" \
           -Dsonar.sources=. \
           -Dsonar.host.url=http://3.84.123.130:9000 \
           -Dsonar.login=sqa_b58ecbdde10eef354c6768e54340453c17ea4ffd
