@@ -10,18 +10,19 @@ phases:
       - echo "Installing Sonar Scanner..."
       - curl -o sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
       - unzip sonar-scanner-cli.zip
+      - chmod +x sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner
       - export PATH=$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin
       - echo "Sonar Scanner Installed."
 
   build:
     commands:
       - echo "Running SonarQube Analysis..."
-      - export REPO_NAME=$(basename `git rev-parse --show-toplevel`)
-      - export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+      - export REPO_NAME=${CODEBUILD_PROJECT:-"default-repo"}
+      - export BRANCH_NAME=${CODEBUILD_GIT_BRANCH:-"main"}
       - |
         sonar-scanner \
-          -Dsonar.projectKey=$REPO_NAME \
-          -Dsonar.branch.name=$BRANCH_NAME \
+          -Dsonar.projectKey="$REPO_NAME" \
+          -Dsonar.branch.name="$BRANCH_NAME" \
           -Dsonar.sources=. \
           -Dsonar.host.url=http://3.84.123.130:9000 \
           -Dsonar.login=sqa_b58ecbdde10eef354c6768e54340453c17ea4ffd
