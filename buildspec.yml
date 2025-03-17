@@ -16,8 +16,10 @@ phases:
   build:
     commands:
       - echo "Running SonarQube Analysis..."
-      - export REPO_NAME=$(basename `git rev-parse --show-toplevel`)
-      - export BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+      - export REPO_NAME=$(basename $CODEBUILD_SOURCE_REPO_URL .git)
+      - export BRANCH_NAME=$CODEBUILD_SOURCE_VERSION
+      - echo "Repository Name: $REPO_NAME"
+      - echo "Branch Name: $BRANCH_NAME"
       - sonar-scanner \
           -Dsonar.projectKey=$REPO_NAME \
           -Dsonar.branch.name=$BRANCH_NAME \
