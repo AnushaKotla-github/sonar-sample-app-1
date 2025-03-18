@@ -1,7 +1,11 @@
 hooks:
-  ApplicationStart:
-    - location: scripts/start.sh
+  ApplicationStop:
+    - location: scripts/stop.sh
       timeout: 300
       runas: ec2-user
   BeforeInstall:
     - location: scripts/permissions.sh
+  ApplicationStart:
+    - location: scripts/start.sh
+      timeout: 300
+      runas: ec2-user
